@@ -163,22 +163,27 @@ void SuperGameboy::ProcessInputPortWrite(uint8_t value)
 					LogPacket();
 				}
 			} else {
-				_packetData[_packetByte] &= ~(1 << _packetBit);
+
+				_packetByteBuffer &= ~(1 << _packetBit);
 			}
 			_packetBit++;
 			if(_packetBit == 8) {
+				_packetData[_packetByte] = _packetByteBuffer;
 				_packetBit = 0;
-				_packetByte++;
+				_packetByte++;	
 			}
+			
+			
 		} else if(value == 0x10) {
 			//1 bit
 			if(_packetByte >= 16) {
 				//Invalid bit
 				_listeningForPacket = false;
 			} else {
-				_packetData[_packetByte] |= (1 << _packetBit);
+				_packetByteBuffer |= (1 << _packetBit);
 				_packetBit++;
 				if(_packetBit == 8) {
+					_packetData[_packetByte] = _packetByteBuffer;
 					_packetBit = 0;
 					_packetByte++;
 				}

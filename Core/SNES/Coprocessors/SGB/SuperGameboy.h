@@ -40,6 +40,7 @@ private:
 	uint64_t _inputWriteClock = 0;
 	uint8_t _inputValue = 0;	
 	uint8_t _packetData[16] = {};
+	uint8_t _packetByteBuffer = 0x00;
 	uint8_t _packetByte = 0;
 	uint8_t _packetBit = 0;
 
